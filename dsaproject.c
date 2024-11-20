@@ -14,7 +14,7 @@ typedef struct student *T_Student;
 
 T_Student createStudent()
 {
-  T_Student newStudent = (T_Student)malloc(sizeof(struct student));
+    T_Student newStudent = (T_Student)malloc(sizeof(struct student));
 
     if (newStudent == NULL)
     {
@@ -58,11 +58,12 @@ void displaylist(T_Student sentinel)
     }
 }
 
-
-T_Student addStudent(T_Student sentinel, char name[], long id, float grade) {
+T_Student addStudent(T_Student sentinel, char name[], long id, float grade)
+{
     T_Student newStudent = (T_Student)malloc(sizeof(struct student));
 
-    if (newStudent == NULL) {
+    if (newStudent == NULL)
+    {
         printf("Memory allocation failed.\n");
         exit(1);
     }
@@ -76,23 +77,28 @@ T_Student addStudent(T_Student sentinel, char name[], long id, float grade) {
     return sentinel;
 }
 
-int studentCount(T_Student sentinel) {
-  int count = 0;
+int studentCount(T_Student sentinel)
+{
+    int count = 0;
 
-  T_Student current = sentinel->next;
+    T_Student current = sentinel->next;
 
-  while(current!=NULL) {
-    count++;
-    current = current->next;
-  }
+    while (current != NULL)
+    {
+        count++;
+        current = current->next;
+    }
 
-  return count;
+    return count;
 }
 
-void findStudent(T_Student sentinel, long id) {
+void findStudent(T_Student sentinel, long id)
+{
     T_Student current = sentinel->next;
-    while (current) {
-        if (current->id_num == id) {
+    while (current)
+    {
+        if (current->id_num == id)
+        {
 
             printf("Student: \n");
             printf("--------------------------------------------------\n");
@@ -107,20 +113,24 @@ void findStudent(T_Student sentinel, long id) {
     printf("No Student with ID %ld is found!\n", id);
 }
 
-void deleteLastStudent(T_Student sentinel) {
-    if (!sentinel->next) {
+void deleteLastStudent(T_Student sentinel)
+{
+    if (!sentinel->next)
+    {
         printf("No students to delete.\n");
         return;
     }
 
     T_Student current = sentinel->next;
-    if (!current->next) {
+    if (!current->next)
+    {
         free(current);
         sentinel->next = NULL;
         return;
     }
 
-    while (current->next && current->next->next) {
+    while (current->next && current->next->next)
+    {
         current = current->next;
     }
 
@@ -128,128 +138,156 @@ void deleteLastStudent(T_Student sentinel) {
     current->next = NULL;
 }
 
-void sortList(T_Student sentinel) {
-  T_Student sorted = NULL;
+void sortList(T_Student sentinel)
+{
+    T_Student sorted = NULL;
 
-  T_Student current = sentinel->next;
-  while(current) {
-    T_Student next = current->next;
-    if (sorted == NULL || sorted->grade >= current->grade) {
-      current->next = sorted;
-      sorted = current;
-    } else {
-      T_Student temp = sorted;
-      while (temp->next != NULL && temp->next->grade < current->grade) {
-        temp = temp->next;
-      }
+    T_Student current = sentinel->next;
+    while (current)
+    {
+        T_Student next = current->next;
+        if (sorted == NULL || sorted->grade >= current->grade)
+        {
+            current->next = sorted;
+            sorted = current;
+        }
+        else
+        {
+            T_Student temp = sorted;
+            while (temp->next != NULL && temp->next->grade < current->grade)
+            {
+                temp = temp->next;
+            }
 
-    current->next = temp->next;
-    temp->next = current;
+            current->next = temp->next;
+            temp->next = current;
+        }
+
+        current = next;
     }
-    
-    current = next;
-  } 
-  sentinel->next = sorted;
+    sentinel->next = sorted;
 }
 
-float averageExam(T_Student sentinel) {
+float averageExam(T_Student sentinel)
+{
     T_Student current = sentinel->next;
 
     float sum = 0;
     int count = 0;
 
-    while (current) {
+    while (current)
+    {
         sum += current->grade;
         count++;
         current = current->next;
     }
 
-    if (count == 0) {
+    if (count == 0)
+    {
         printf("No students in the list.\n");
         return 0;
     }
 
     float average = sum / count;
 
-    if (average > 65) {
+    if (average > 65)
+    {
         printf("Greater than 65.\n");
-    } else if (average > 50 && average <= 65) {
+    }
+    else if (average > 50 && average <= 65)
+    {
         printf("Between 50 and 65.\n");
-    } else {
+    }
+    else
+    {
         printf("Less than 50.\n");
     }
 
     return average;
 }
 
-void freeList(T_Student sentinel) {
-  T_Student current = sentinel->next;
+void freeList(T_Student sentinel)
+{
+    T_Student current = sentinel->next;
 
-  while(current) {
-    T_Student prev = current;
-    current = current->next;
-    free(prev);
-  }
-  free(sentinel);
+    while (current)
+    {
+        T_Student prev = current;
+        current = current->next;
+        free(prev);
+    }
+    free(sentinel);
 }
 
-void splitList(T_Student sentinel,  T_Student* highLevel, T_Student* lowLevel){
-  *highLevel = (T_Student)malloc(sizeof(struct student));
-  *lowLevel = (T_Student)malloc(sizeof(struct student));
+void splitList(T_Student sentinel, T_Student *highLevel, T_Student *lowLevel)
+{
+    *highLevel = (T_Student)malloc(sizeof(struct student));
+    *lowLevel = (T_Student)malloc(sizeof(struct student));
 
-  if (!*highLevel || !*lowLevel) {
-    printf("Memory allocation failed.\n");
-    exit(1);
-  }
-
-  (*highLevel)->next = NULL;
-  (*lowLevel)->next = NULL;
-
-  T_Student current = sentinel->next;
-
-  while(current) {
-    T_Student newStudent = (T_Student)malloc(sizeof(struct student));
-
-    if (!newStudent) {
-      printf("Memory allocation failed.\n");
-      exit(1);
+    if (!*highLevel || !*lowLevel)
+    {
+        printf("Memory allocation failed.\n");
+        exit(1);
     }
 
-    strcpy(newStudent->name, current->name);
-    newStudent->id_num = current->id_num;
-    newStudent->grade = current->grade;
-    newStudent->next = NULL;
+    (*highLevel)->next = NULL;
+    (*lowLevel)->next = NULL;
 
-    if (current->grade >= 65) {
-      newStudent->next = (*highLevel)->next;
-      (*highLevel)->next = newStudent;
-    } else {
-        newStudent->next = (*lowLevel)->next;
-        (*lowLevel)->next = newStudent;
+    T_Student current = sentinel->next;
+
+    while (current)
+    {
+        T_Student newStudent = (T_Student)malloc(sizeof(struct student));
+
+        if (!newStudent)
+        {
+            printf("Memory allocation failed.\n");
+            exit(1);
+        }
+
+        strcpy(newStudent->name, current->name);
+        newStudent->id_num = current->id_num;
+        newStudent->grade = current->grade;
+        newStudent->next = NULL;
+
+        if (current->grade >= 65)
+        {
+            newStudent->next = (*highLevel)->next;
+            (*highLevel)->next = newStudent;
+        }
+        else
+        {
+            newStudent->next = (*lowLevel)->next;
+            (*lowLevel)->next = newStudent;
+        }
+
+        current = current->next;
     }
-
-    current = current->next;
-  }
 }
 
-T_Student mergeLists(T_Student firstSentinel, T_Student secondSentinel) {
-    if (!firstSentinel || !secondSentinel) {
+T_Student mergeLists(T_Student firstSentinel, T_Student secondSentinel)
+{
+    if (!firstSentinel || !secondSentinel)
+    {
         printf("Error: One or both sentinels are NULL.\n");
         return NULL;
     }
 
-    if (!firstSentinel->next) {
+    if (!firstSentinel->next)
+    {
         free(firstSentinel);
         return secondSentinel;
     }
 
-    if (!secondSentinel->next) {
-      free(secondSentinel);
-      return firstSentinel;
+    if (!secondSentinel->next)
+    {
+        free(secondSentinel);
+        return firstSentinel;
     }
 
     T_Student current = firstSentinel;
-    while (current->next) {
+    while (current->next)
+    {
         current = current->next;
     }
 
@@ -257,5 +295,4 @@ T_Student mergeLists(T_Student firstSentinel, T_Student secondSentinel) {
     free(secondSentinel);
 
     return firstSentinel;
-
 }
