@@ -107,3 +107,27 @@ void deleteLastStudent(T_Student sentinel) {
   free(current->next);
   current->next = NULL;
 }
+
+void sortList(T_Student sentinel) {
+  T_Student sorted = NULL;
+
+  T_Student current = sentinel->next;
+  while(current) {
+    T_Student next = current->next;
+    if (sorted == NULL || sorted->grade >= current->grade) {
+      current->next = sorted;
+      sorted = current;
+    } else {
+      T_Student temp = sorted;
+      while (temp->next != NULL && temp->next->grade < current->grade) {
+        temp = temp->next;
+      }
+
+    current->next = temp->next;
+    temp->next = current;
+    }
+    
+    current = next;
+  } 
+  sentinel->next = sorted;
+}
