@@ -151,3 +151,15 @@ float averageExam(T_Student sentinel) {
   else printf("Less than 50.");
 
 }
+
+void freeList(T_Student sentinel) {
+  T_Student current = sentinel->next;
+  T_Student prev;
+
+  while(current) {
+    prev = current;
+    current = current->next;
+    free(prev);
+  }
+  free(sentinel);
+}
