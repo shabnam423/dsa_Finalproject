@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "dsaproject.c" 
+#include "dsaproject.h"
 
 int main() {
     T_Student sentinel = (T_Student)malloc(sizeof(struct student));
