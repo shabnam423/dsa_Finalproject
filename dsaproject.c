@@ -202,3 +202,22 @@ void splitList(T_Student sentinel,  T_Student* highLevel, T_Student* lowLevel){
     current = current->next;
   }
 }
+
+T_Student mergeLists(T_Student firstSentinel, T_Student secondSentinel) {
+    if (!firstSentinel || !secondSentinel) {
+        printf("Error: One or both sentinels are NULL.\n");
+        return NULL;
+    }
+
+    T_Student current = firstSentinel;
+
+    while (current->next != NULL) {
+        current = current->next;
+    }
+
+    current->next = secondSentinel->next;
+
+    free(secondSentinel);
+
+    return firstSentinel;
+}
