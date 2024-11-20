@@ -131,3 +131,23 @@ void sortList(T_Student sentinel) {
   } 
   sentinel->next = sorted;
 }
+
+float averageExam(T_Student sentinel) {
+  T_Student current = sentinel->next;
+
+  float sum=0;
+  int count=0;
+  
+  while(current) {
+    sum+=current->grade;
+    count++;
+    current = current->next;
+  }
+
+  float average = sum/count;
+
+  if (average > 65) printf("Greater than 65.");
+  else if (average > 50 && average < 65) printf("Between 50 and 65.");
+  else printf("Less than 50.");
+
+}
