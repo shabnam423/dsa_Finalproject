@@ -97,3 +97,13 @@ void findStudent(T_Student sentinel, long id) {
     else printf("No Student with %d is found!", id);
   }
 }
+
+void deleteLastStudent(T_Student sentinel) {
+  T_Student current = sentinel->next;
+
+  while (current->next && current->next->next)
+    current = current->next;
+
+  free(current->next);
+  current->next = NULL;
+}
