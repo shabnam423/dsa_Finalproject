@@ -114,12 +114,12 @@ void sortList(T_Student sentinel) {
   T_Student current = sentinel->next;
   while(current) {
     T_Student next = current->next;
-    if (sorted == NULL || sorted->id_num >= current->id_num) {
+    if (sorted == NULL || sorted->grade >= current->grade) {
       current->next = sorted;
       sorted = current;
     } else {
       T_Student temp = sorted;
-      while (temp->next != NULL && temp->next->id_num < current->id_num) {
+      while (temp->next != NULL && temp->next->grade < current->grade) {
         temp = temp->next;
       }
 
