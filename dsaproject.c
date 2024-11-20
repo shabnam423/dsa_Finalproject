@@ -163,3 +163,42 @@ void freeList(T_Student sentinel) {
   }
   free(sentinel);
 }
+
+void splitList(T_Student sentinel,  T_Student* highLevel, T_Student* lowLevel){
+  *highLevel = (T_Student)malloc(sizeof(struct student));
+  *lowLevel = (T_Student)malloc(sizeof(struct student));
+
+  if (!*highLevel || !*lowLevel) {
+    printf("Memory allocation failed.\n");
+    exit(1);
+  }
+
+  (*highLevel)->next = NULL;
+  (*lowLevel)->next = NULL;
+
+  T_Student current = sentinel->next;
+
+  while(current) {
+    T_Student newStudent = (T_Student)malloc(sizeof(struct student));
+
+    if (!newStudent) {
+      printf("Memory allocation failed.\n");
+      exit(1);
+    }
+
+    strcpy(newStudent->name, current->name);
+    newStudent->id_num = current->id_num;
+    newStudent->grade = current->grade;
+    newStudent->next = NULL;
+
+    if (current->grade >= 65) {
+      newStudent->next = (*highLevel)->next;
+      (*highLevel)->next = newStudent;
+    } else {
+        newStudent->next = (*lowLevel)->next;
+        (*lowLevel)->next = newStudent;
+    }
+
+    current = current->next;
+  }
+}
