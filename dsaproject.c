@@ -15,7 +15,10 @@ typedef struct student *T_Student;
 T_Student createStudent()
 {
 
+
     T_Student newStudent = (T_Student)malloc(sizeof(struct student));
+
+
 
     if (newStudent == NULL)
     {
@@ -59,6 +62,7 @@ void displaylist(T_Student sentinel)
     }
 }
 
+
 T_Student addStudent(T_Student sentinel, char name[], long id, float grade)
 {
     T_Student newStudent = (T_Student)malloc(sizeof(struct student));
@@ -94,6 +98,7 @@ int studentCount(T_Student sentinel)
     return count;
 }
 
+
 void findStudent(T_Student sentinel, long id)
 {
     T_Student current = sentinel->next;
@@ -101,6 +106,7 @@ void findStudent(T_Student sentinel, long id)
     {
         if (current->id_num == id)
         {
+
             printf("Student: \n");
             printf("--------------------------------------------------\n");
             printf("| %-30s | %-10s | %-5s |\n", "Name", "ID", "Grade");
@@ -113,21 +119,26 @@ void findStudent(T_Student sentinel, long id)
     printf("No Student with ID %ld is found!\n", id);
 }
 
+
 void deleteLastStudent(T_Student sentinel)
 {
     if (!sentinel->next)
     {
+
         printf("No students to delete.\n");
         return;
     }
 
     T_Student current = sentinel->next;
+
     if (!current->next)
     {
+
         free(current);
         sentinel->next = NULL;
         return;
     }
+
 
     while (current->next && current->next->next)
     {
@@ -137,6 +148,7 @@ void deleteLastStudent(T_Student sentinel)
     free(current->next);
     current->next = NULL;
 }
+
 
 void sortList(T_Student sentinel)
 {
@@ -175,20 +187,26 @@ float averageExam(T_Student sentinel)
     float sum = 0;
     int count = 0;
 
+
     while (current)
     {
+
         sum += current->grade;
         count++;
         current = current->next;
     }
 
+
     if (count == 0)
     {
+
+
         printf("No students in the list.\n");
         return 0;
     }
 
     float average = sum / count;
+
 
     if (average > 65)
     {
@@ -269,15 +287,19 @@ T_Student mergeLists(T_Student firstSentinel, T_Student secondSentinel)
 {
     if (!firstSentinel || !secondSentinel)
     {
+
         printf("Error: One or both sentinels are NULL.\n");
         return NULL;
     }
 
+
     if (!firstSentinel->next)
     {
+
         free(firstSentinel);
         return secondSentinel;
     }
+
 
     if (!secondSentinel->next)
     {
@@ -288,6 +310,7 @@ T_Student mergeLists(T_Student firstSentinel, T_Student secondSentinel)
     T_Student current = firstSentinel;
     while (current->next)
     {
+
         current = current->next;
     }
 
