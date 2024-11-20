@@ -14,6 +14,7 @@ typedef struct student *T_Student;
 
 T_Student createStudent()
 {
+
     T_Student newStudent = (T_Student)malloc(sizeof(struct student));
 
     if (newStudent == NULL)
@@ -74,6 +75,7 @@ T_Student addStudent(T_Student sentinel, char name[], long id, float grade)
 
     newStudent->next = sentinel->next;
     sentinel->next = newStudent;
+
     return sentinel;
 }
 
@@ -99,13 +101,11 @@ void findStudent(T_Student sentinel, long id)
     {
         if (current->id_num == id)
         {
-
             printf("Student: \n");
             printf("--------------------------------------------------\n");
             printf("| %-30s | %-10s | %-5s |\n", "Name", "ID", "Grade");
             printf("--------------------------------------------------\n");
             printf("| %-30s | %-10ld | %-5.3f |\n", current->name, current->id_num, current->grade);
-
             return;
         }
         current = current->next;
