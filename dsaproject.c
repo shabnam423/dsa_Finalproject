@@ -13,7 +13,7 @@ typedef struct student* T_Student;
 
 T_Student createStudent() {
 
-  T_Student newStudent = (T_Student)malloc(sizeof(T_Student));
+  T_Student newStudent = (T_Student)malloc(sizeof(struct student));
 
   if (newStudent == NULL) {
         printf("Memory allocation failed.\n");
@@ -54,20 +54,22 @@ void displaylist(T_Student sentinel) {
 
 }
 
-T_Student addStudent(T_Student sentinel, char name[], long id , float grade) {
-  T_Student newStudent = (T_Student)malloc(sizeof(struct student));
+T_Student addStudent(T_Student sentinel, char name[], long id, float grade) {
+    T_Student newStudent = (T_Student)malloc(sizeof(struct student));
 
-  if (newStudent == NULL) {
+    if (newStudent == NULL) {
         printf("Memory allocation failed.\n");
         exit(1);
-  }
+    }
 
-  strcpy(newStudent->name, name);
-  newStudent->id_num = id;
-  newStudent->grade = grade;
+    strcpy(newStudent->name, name);
+    newStudent->id_num = id;
+    newStudent->grade = grade;
 
-  newStudent->next = sentinel->next;
-  sentinel->next = newStudent;
+    newStudent->next = sentinel->next;
+    sentinel->next = newStudent;
+
+    return sentinel;
 }
 
 int studentCount(T_Student sentinel) {
@@ -84,28 +86,40 @@ int studentCount(T_Student sentinel) {
 }
 
 void findStudent(T_Student sentinel, long id) {
-  T_Student current = sentinel->next;
-
-  while(current) {
-    if (current->id_num==id) {
-      printf("Student: \n");
-      printf("--------------------------------------------------\n");
-      printf("| %-30s | %-10s | %-5s |\n", "Name", "ID", "Grade");
-      printf("--------------------------------------------------\n");
-      printf("| %-30s | %-10ld | %-5.3f |\n", current->name, current->id_num, current->grade);
+    T_Student current = sentinel->next;
+    while (current) {
+        if (current->id_num == id) {
+            printf("Student: \n");
+            printf("--------------------------------------------------\n");
+            printf("| %-30s | %-10s | %-5s |\n", "Name", "ID", "Grade");
+            printf("--------------------------------------------------\n");
+            printf("| %-30s | %-10ld | %-5.3f |\n", current->name, current->id_num, current->grade);
+            return;
+        }
+        current = current->next;
     }
-    else printf("No Student with %d is found!", id);
-  }
+    printf("No Student with ID %ld is found!\n", id);
 }
 
 void deleteLastStudent(T_Student sentinel) {
-  T_Student current = sentinel->next;
+    if (!sentinel->next) {
+        printf("No students to delete.\n");
+        return;
+    }
 
-  while (current->next && current->next->next)
-    current = current->next;
+    T_Student current = sentinel->next;
+    if (!current->next) {
+        free(current);
+        sentinel->next = NULL;
+        return;
+    }
 
-  free(current->next);
-  current->next = NULL;
+    while (current->next && current->next->next) {
+        current = current->next;
+    }
+
+    free(current->next);
+    current->next = NULL;
 }
 
 void sortList(T_Student sentinel) {
@@ -133,23 +147,33 @@ void sortList(T_Student sentinel) {
 }
 
 float averageExam(T_Student sentinel) {
-  T_Student current = sentinel->next;
+    T_Student current = sentinel->next;
 
-  float sum=0;
-  int count=0;
-  
-  while(current) {
-    sum+=current->grade;
-    count++;
-    current = current->next;
-  }
+    float sum = 0;
+    int count = 0;
 
-  float average = sum/count;
+    while (current) {
+        sum += current->grade;
+        count++;
+        current = current->next;
+    }
 
-  if (average > 65) printf("Greater than 65.");
-  else if (average > 50 && average < 65) printf("Between 50 and 65.");
-  else printf("Less than 50.");
+    if (count == 0) {
+        printf("No students in the list.\n");
+        return 0;
+    }
 
+    float average = sum / count;
+
+    if (average > 65) {
+        printf("Greater than 65.\n");
+    } else if (average > 50 && average <= 65) {
+        printf("Between 50 and 65.\n");
+    } else {
+        printf("Less than 50.\n");
+    }
+
+    return average;
 }
 
 void freeList(T_Student sentinel) {
@@ -209,14 +233,17 @@ T_Student mergeLists(T_Student firstSentinel, T_Student secondSentinel) {
         return NULL;
     }
 
-    T_Student current = firstSentinel;
+    if (!firstSentinel->next) {
+        free(firstSentinel);
+        return secondSentinel;
+    }
 
-    while (current->next != NULL) {
+    T_Student current = firstSentinel;
+    while (current->next) {
         current = current->next;
     }
 
     current->next = secondSentinel->next;
-
     free(secondSentinel);
 
     return firstSentinel;
