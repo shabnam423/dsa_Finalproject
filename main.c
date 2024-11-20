@@ -1,9 +1,10 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "dsaproject.c" // Include your dsaproject.c functions here
+#include "dsaproject.c" 
 
 int main() {
     T_Student sentinel = (T_Student)malloc(sizeof(struct student));
+
     if (!sentinel) {
         printf("Memory allocation failed.\n");
         return 1;
@@ -97,7 +98,6 @@ int main() {
                 break;
             default:
                 printf("Invalid choice. Please try again.\n");
-                deleteLastStudent(sentinel);
         }
     } while (choice != 9);
 
