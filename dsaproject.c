@@ -178,10 +178,9 @@ float averageExam(T_Student sentinel) {
 
 void freeList(T_Student sentinel) {
   T_Student current = sentinel->next;
-  T_Student prev;
 
   while(current) {
-    prev = current;
+    T_Student prev = current;
     current = current->next;
     free(prev);
   }
