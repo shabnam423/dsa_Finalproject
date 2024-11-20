@@ -237,6 +237,11 @@ T_Student mergeLists(T_Student firstSentinel, T_Student secondSentinel) {
         return secondSentinel;
     }
 
+    if (!secondSentinel->next) {
+      free(secondSentinel);
+      return firstSentinel;
+    }
+
     T_Student current = firstSentinel;
     while (current->next) {
         current = current->next;
