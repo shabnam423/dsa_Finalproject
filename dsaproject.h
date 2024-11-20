@@ -5,14 +5,17 @@
 #include <stdlib.h>
 #include <string.h>
 
-struct student {
+
+struct student
+{
     char name[50];
     long id_num;
     float grade;
-    struct student* next;
+    struct student *next;
 };
 
-typedef struct student* T_Student;
+typedef struct student *T_Student;
+
 
 T_Student createStudent();
 void displaylist(T_Student sentinel);
@@ -23,7 +26,9 @@ void deleteLastStudent(T_Student sentinel);
 void sortList(T_Student sentinel);
 float averageExam(T_Student sentinel);
 void freeList(T_Student sentinel);
-void splitList(T_Student sentinel, T_Student* highLevel, T_Student* lowLevel);
+
+void splitList(T_Student sentinel, T_Student *highLevel, T_Student *lowLevel);
 T_Student mergeLists(T_Student firstSentinel, T_Student secondSentinel);
 
 #endif
+
