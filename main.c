@@ -19,8 +19,10 @@ int main()
     float grade;
     T_Student highLevel = NULL, lowLevel = NULL;
 
+
     do
     {
+
         printf("\n*** Student Exam Management System ***\n");
         printf("1. Enter a new student\n");
         printf("2. Add new student (directly)\n");
@@ -35,6 +37,7 @@ int main()
         printf("9. Exit\n");
         printf("Enter your choice: ");
         scanf("%d", &choice);
+
 
         switch (choice)
         {
@@ -103,9 +106,12 @@ int main()
             break;
         default:
             printf("Invalid choice. Please try again.\n");
+
         }
     } while (choice != 9);
 
     freeList(sentinel);
     return 0;
+
 }
+
